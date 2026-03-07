@@ -62,6 +62,7 @@ const typescriptConfig = defineConfig([
       // https://github.com/eslint/eslint/issues/20272
       '@typescript-eslint/unified-signatures': 'off',
       '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/prefer-nullish-coalescing': 'off',
       // Allow ts-expect-error and ts-ignore with descriptions
       '@typescript-eslint/ban-ts-comment': [
         'error',
@@ -234,6 +235,7 @@ const tailwindcssConfig = defineConfig({
       'warn',
       { group: 'newLine', preferSingleLine: true, printWidth: 80 },
     ],
+    'better-tailwindcss/no-unknown-classes': 'warn',
   },
   settings: {
     'better-tailwindcss': {

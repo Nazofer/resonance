@@ -19,7 +19,7 @@ function Label({
           group-data-[disabled=true]:opacity-50
           peer-disabled:cursor-not-allowed peer-disabled:opacity-50
         `,
-        className,
+        className
       )}
       {...props}
     />

@@ -1,9 +1,13 @@
-import { Toaster } from '@/components/ui/sonner';
-import { TooltipProvider } from '@/components/ui/tooltip';
+
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
-import { Geist_Mono, Inter } from 'next/font/google';
+import { Geist_Mono, Inter, Figtree } from 'next/font/google';
 import './globals.css';
+import { cn } from '@/lib/utils';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { Toaster } from '@/components/ui/sonner';
+
+const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' });
 
 const inter = Inter({
   variable: '--font-inter',
@@ -27,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" className={cn('font-sans', figtree.variable)}>
         <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
           <TooltipProvider>
             {children}

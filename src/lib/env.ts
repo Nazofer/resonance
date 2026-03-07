@@ -5,6 +5,8 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().min(1),
   },
-  experimental__runtimeEnv: process.env,
+  runtimeEnv: {
+    DATABASE_URL: process.env.DATABASE_URL,
+  },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });
