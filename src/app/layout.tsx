@@ -1,11 +1,12 @@
-
-import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
-import { Geist_Mono, Inter, Figtree } from 'next/font/google';
+import {
+  Geist_Mono, Inter, Figtree
+} from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/sonner';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' });
 
