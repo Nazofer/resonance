@@ -13,7 +13,7 @@ function ResizablePanelGroup({
       data-slot="resizable-panel-group"
       className={cn(
         'flex size-full aria-[orientation=vertical]:flex-col',
-        className,
+        className
       )}
       {...props}
     />
@@ -45,7 +45,7 @@ function ResizableHandle({
           aria-[orientation=horizontal]:after:-translate-y-1/2
           [&[aria-orientation=horizontal]>div]:rotate-90
         `,
-        className,
+        className
       )}
       {...props}
     >

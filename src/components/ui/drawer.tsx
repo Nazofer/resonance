@@ -43,7 +43,7 @@ function DrawerOverlay({
           data-open:animate-in data-open:fade-in-0
           data-closed:animate-out data-closed:fade-out-0
         `,
-        className,
+        className
       )}
       {...props}
     />
@@ -78,15 +78,14 @@ function DrawerContent({
             data-[vaul-drawer-direction=left]:sm:max-w-sm
             data-[vaul-drawer-direction=right]:sm:max-w-sm
           `,
-          className,
+          className
         )}
         {...props}
       >
-        <div
-          className="
-            mx-auto mt-4 hidden h-1 w-[100px] shrink-0 rounded-full bg-muted
-            group-data-[vaul-drawer-direction=bottom]/drawer-content:block
-          "
+        <div className="
+          mx-auto mt-4 hidden h-1 w-[100px] shrink-0 rounded-full bg-muted
+          group-data-[vaul-drawer-direction=bottom]/drawer-content:block
+        "
         />
         {children}
       </DrawerPrimitive.Content>
@@ -105,7 +104,7 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<'div'>) {
           group-data-[vaul-drawer-direction=top]/drawer-content:text-center
           md:gap-0.5 md:text-left
         `,
-        className,
+        className
       )}
       {...props}
     />

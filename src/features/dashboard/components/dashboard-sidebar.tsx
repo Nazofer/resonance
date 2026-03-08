@@ -24,19 +24,19 @@ import {
 } from '@clerk/nextjs';
 import Link from 'next/link';
 import {
-  IconHeadphones,
-  IconHome,
-  IconLayoutGrid,
-  IconSettings,
-  IconVolume2,
-  IconWaveSine,
-  type Icon,
-} from '@tabler/icons-react';
+  Headphones,
+  House,
+  LayoutGrid,
+  Settings,
+  Volume2,
+  AudioLines,
+  type LucideIcon
+} from 'lucide-react';
 
 interface MenuItem {
   title: string
   url?: string
-  icon: Icon
+  icon: LucideIcon
   onClick?: () => void
 }
 
@@ -59,7 +59,6 @@ function NavSection({ label, items, pathname }: NavSectionProps) {
           {items.map(item => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
-                asChild={!!item.url}
                 isActive={
                   item.url
                     ? item.url === '/'
@@ -69,23 +68,15 @@ function NavSection({ label, items, pathname }: NavSectionProps) {
                 }
                 onClick={item.onClick}
                 tooltip={item.title}
+                render={item.url ? <Link href={item.url} /> : undefined}
                 className={cn(
                   'h-9 border border-transparent px-3 py-2 text-[13px] font-medium tracking-tight',
                   'data-[active=true]:border-border',
                   'data-[active=true]:shadow-[0px_1px_1px_0px_rgba(44,54,53,0.03),inset_0px_0px_0px_2px_white]',
                 )}
               >
-                {item.url ? (
-                  <Link href={item.url}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </Link>
-                ) : (
-                  <>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </>
-                )}
+                <item.icon />
+                <span>{item.title}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
@@ -103,28 +94,28 @@ export function DashboardSidebar() {
     {
       title: 'Dashboard',
       url: '/',
-      icon: IconHome,
+      icon: House,
     },
     {
       title: 'Explore voices',
       url: '/voices',
-      icon: IconLayoutGrid,
+      icon: LayoutGrid,
     },
     {
       title: 'Text to speech',
       url: '/text-to-speech',
-      icon: IconWaveSine,
+      icon: AudioLines,
     },
     {
       title: 'Voice cloning',
-      icon: IconVolume2,
+      icon: Volume2,
     },
   ];
 
   const othersMenuItems: MenuItem[] = [
     {
       title: 'Settings',
-      icon: IconSettings,
+      icon: Settings,
       onClick: () => {
         clerk.openOrganizationProfile();
       },
@@ -132,7 +123,7 @@ export function DashboardSidebar() {
     {
       title: 'Help and support',
       url: 'mailto:business@codewithantonio.com',
-      icon: IconHeadphones,
+      icon: Headphones,
     },
   ];
 

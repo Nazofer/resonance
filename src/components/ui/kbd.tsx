@@ -12,7 +12,7 @@ function Kbd({ className, ...props }: React.ComponentProps<'kbd'>) {
           dark:in-data-[slot=tooltip-content]:bg-background/10
           [&_svg:not([class*='size-'])]:size-3
         `,
-        className,
+        className
       )}
       {...props}
     />

@@ -1,13 +1,10 @@
-/* eslint-disable jsx-a11y/anchor-has-content */
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
-  IconChevronLeft,
-  IconChevronRight,
-  IconDots,
-} from '@tabler/icons-react';
+  ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon
+} from 'lucide-react';
 
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (
@@ -47,22 +44,26 @@ function PaginationLink({
   className,
   isActive,
   size = 'icon',
+  children,
   ...props
 }: PaginationLinkProps) {
   return (
     <Button
-      asChild
       variant={isActive ? 'outline' : 'ghost'}
       size={size}
       className={cn(className)}
-    >
-      <a
-        aria-current={isActive ? 'page' : undefined}
-        data-slot="pagination-link"
-        data-active={isActive}
-        {...props}
-      />
-    </Button>
+      nativeButton={false}
+      render={(
+        <a
+          aria-current={isActive ? 'page' : undefined}
+          data-slot="pagination-link"
+          data-active={isActive}
+          {...props}
+        >
+          {children}
+        </a>
+      )}
+    />
   );
 }
 
@@ -78,7 +79,7 @@ function PaginationPrevious({
       className={cn('pl-1.5!', className)}
       {...props}
     >
-      <IconChevronLeft data-icon="inline-start" />
+      <ChevronLeftIcon data-icon="inline-start" />
       <span className="hidden sm:block">{text}</span>
     </PaginationLink>
   );
@@ -97,7 +98,7 @@ function PaginationNext({
       {...props}
     >
       <span className="hidden sm:block">{text}</span>
-      <IconChevronRight data-icon="inline-end" />
+      <ChevronRightIcon data-icon="inline-end" />
     </PaginationLink>
   );
 }
@@ -111,12 +112,12 @@ function PaginationEllipsis({
       aria-hidden
       data-slot="pagination-ellipsis"
       className={cn(
-        `flex size-8 items-center justify-center [&_svg:not([class*='size-'])]:size-4`,
-        className,
+        "flex size-8 items-center justify-center [&_svg:not([class*='size-'])]:size-4",
+        className
       )}
       {...props}
     >
-      <IconDots />
+      <MoreHorizontalIcon />
       <span className="sr-only">More pages</span>
     </span>
   );

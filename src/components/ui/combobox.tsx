@@ -12,8 +12,8 @@ import {
   InputGroupInput,
 } from '@/components/ui/input-group';
 import {
-  IconChevronDown, IconX, IconCheck
-} from '@tabler/icons-react';
+  ChevronDownIcon, XIcon, CheckIcon
+} from 'lucide-react';
 
 const Combobox = ComboboxPrimitive.Root;
 
@@ -33,7 +33,7 @@ function ComboboxTrigger({
       {...props}
     >
       {children}
-      <IconChevronDown className="pointer-events-none size-4 text-muted-foreground" />
+      <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
     </ComboboxPrimitive.Trigger>
   );
 }
@@ -46,7 +46,7 @@ function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
       className={cn(className)}
       {...props}
     >
-      <IconX className="pointer-events-none" />
+      <XIcon className="pointer-events-none" />
     </ComboboxPrimitive.Clear>
   );
 }
@@ -73,13 +73,11 @@ function ComboboxInput({
           <InputGroupButton
             size="icon-xs"
             variant="ghost"
-            asChild
+            render={<ComboboxTrigger />}
             data-slot="input-group-button"
             className="group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent"
             disabled={disabled}
-          >
-            <ComboboxTrigger />
-          </InputGroupButton>
+          />
         )}
         {showClear && <ComboboxClear disabled={disabled} />}
       </InputGroupAddon>
@@ -133,7 +131,7 @@ function ComboboxContent({
               data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95
               data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95
             `,
-            className,
+            className
           )}
           {...props}
         />
@@ -152,7 +150,7 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
           scroll-py-1 overflow-y-auto overscroll-contain p-1
           data-empty:p-0
         `,
-        className,
+        className
       )}
       {...props}
     />
@@ -177,7 +175,7 @@ function ComboboxItem({
           [&_svg]:pointer-events-none [&_svg]:shrink-0
           [&_svg:not([class*='size-'])]:size-4
         `,
-        className,
+        className
       )}
       {...props}
     >
@@ -185,7 +183,7 @@ function ComboboxItem({
       <ComboboxPrimitive.ItemIndicator
         render={<span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center" />}
       >
-        <IconCheck className="pointer-events-none" />
+        <CheckIcon className="pointer-events-none" />
       </ComboboxPrimitive.ItemIndicator>
     </ComboboxPrimitive.Item>
   );
@@ -229,7 +227,7 @@ function ComboboxEmpty({ className, ...props }: ComboboxPrimitive.Empty.Props) {
           hidden w-full justify-center py-2 text-center text-sm text-muted-foreground
           group-data-empty/combobox-content:flex
         `,
-        className,
+        className
       )}
       {...props}
     />
@@ -267,7 +265,7 @@ function ComboboxChips({
           dark:bg-input/30
           dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40
         `,
-        className,
+        className
       )}
       {...props}
     />
@@ -292,7 +290,7 @@ function ComboboxChip({
           has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50
           has-data-[slot=combobox-chip-remove]:pr-0
         `,
-        className,
+        className
       )}
       {...props}
     >
@@ -303,7 +301,7 @@ function ComboboxChip({
           className="-ml-1 opacity-50 hover:opacity-100"
           data-slot="combobox-chip-remove"
         >
-          <IconX className="pointer-events-none" />
+          <XIcon className="pointer-events-none" />
         </ComboboxPrimitive.ChipRemove>
       )}
     </ComboboxPrimitive.Chip>

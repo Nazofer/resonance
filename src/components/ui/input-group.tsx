@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 'use client';
 
 import * as React from 'react';
@@ -40,7 +38,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
           has-[>[data-align=inline-end]]:[&>input]:pr-1.5
           has-[>[data-align=inline-start]]:[&>input]:pl-1.5
         `,
-        className,
+        className
       )}
       {...props}
     />
@@ -62,26 +60,26 @@ const inputGroupAddonVariants = cva(
           'order-first pl-2 has-[>button]:ml-[-0.3rem] has-[>kbd]:ml-[-0.15rem]',
         'inline-end':
           'order-last pr-2 has-[>button]:mr-[-0.3rem] has-[>kbd]:mr-[-0.15rem]',
-        'block-start': `
-          order-first w-full justify-start px-2.5 pt-2
-          group-has-[>input]/input-group:pt-2
-          [.border-b]:pb-2
-        `,
-        'block-end': `order-last w-full justify-start px-2.5 pb-2 group-has-[>input]/input-group:pb-2 [.border-t]:pt-2`,
+        'block-start':
+          'order-first w-full justify-start px-2.5 pt-2 group-has-[>input]/input-group:pt-2 [.border-b]:pb-2',
+        'block-end':
+          'order-last w-full justify-start px-2.5 pb-2 group-has-[>input]/input-group:pb-2 [.border-t]:pt-2',
       },
     },
     defaultVariants: {
       align: 'inline-start',
     },
-  },
+  }
 );
 
 function InputGroupAddon({
   className,
   align = 'inline-start',
+  children,
   ...props
 }: React.ComponentProps<'div'> & VariantProps<typeof inputGroupAddonVariants>) {
   return (
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events
     <div
       role="group"
       data-slot="input-group-addon"
@@ -94,7 +92,9 @@ function InputGroupAddon({
         e.currentTarget.parentElement?.querySelector('input')?.focus();
       }}
       {...props}
-    />
+    >
+      {children}
+    </div>
   );
 }
 
@@ -103,7 +103,7 @@ const inputGroupButtonVariants = cva(
   {
     variants: {
       size: {
-        'xs': `h-6 gap-1 rounded-[calc(var(--radius)-3px)] px-1.5 [&>svg:not([class*='size-'])]:size-3.5`,
+        'xs': "h-6 gap-1 rounded-[calc(var(--radius)-3px)] px-1.5 [&>svg:not([class*='size-'])]:size-3.5",
         'sm': '',
         'icon-xs':
           'size-6 rounded-[calc(var(--radius)-3px)] p-0 has-[>svg]:p-0',
@@ -113,7 +113,7 @@ const inputGroupButtonVariants = cva(
     defaultVariants: {
       size: 'xs',
     },
-  },
+  }
 );
 
 function InputGroupButton({
@@ -122,8 +122,10 @@ function InputGroupButton({
   variant = 'ghost',
   size = 'xs',
   ...props
-}: Omit<React.ComponentProps<typeof Button>, 'size'>
-  & VariantProps<typeof inputGroupButtonVariants>) {
+}: Omit<React.ComponentProps<typeof Button>, 'size' | 'type'>
+  & VariantProps<typeof inputGroupButtonVariants> & {
+    type?: 'button' | 'submit' | 'reset'
+  }) {
   return (
     <Button
       type={type}
@@ -144,7 +146,7 @@ function InputGroupText({ className, ...props }: React.ComponentProps<'span'>) {
           [&_svg]:pointer-events-none
           [&_svg:not([class*='size-'])]:size-4
         `,
-        className,
+        className
       )}
       {...props}
     />
@@ -167,7 +169,7 @@ function InputGroupInput({
           dark:bg-transparent
           dark:disabled:bg-transparent
         `,
-        className,
+        className
       )}
       {...props}
     />
@@ -190,7 +192,7 @@ function InputGroupTextarea({
           dark:bg-transparent
           dark:disabled:bg-transparent
         `,
-        className,
+        className
       )}
       {...props}
     />

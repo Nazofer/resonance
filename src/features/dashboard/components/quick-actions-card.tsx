@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { IconArrowRight } from '@tabler/icons-react';
+import { ArrowUpRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import type { QuickAction } from '@/features/dashboard/data/quick-actions';
@@ -35,11 +35,9 @@ export function QuickActionsCard({
           <h3 className="text-sm font-medium">{title}</h3>
           <p className="text-xs/relaxed text-muted-foreground">{description}</p>
         </div>
-        <Button variant="outline" size="xs" className="w-fit" asChild>
-          <Link href={href}>
-            Try now
-            <IconArrowRight className="size-3" />
-          </Link>
+        <Button variant="outline" size="xs" className="w-fit" nativeButton={false} render={<Link href={href} />}>
+          Try now
+          <ArrowUpRight className="size-3" />
         </Button>
       </div>
     </div>

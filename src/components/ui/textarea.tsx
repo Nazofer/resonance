@@ -19,7 +19,7 @@ function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
           dark:disabled:bg-input/80
           dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40
         `,
-        className,
+        className
       )}
       {...props}
     />

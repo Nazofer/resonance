@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { Input as InputPrimitive } from '@base-ui/react/input';
 
 import { cn } from '@/lib/utils';
 
 function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
   return (
-    <input
+    <InputPrimitive
       type={type}
       data-slot="input"
       className={cn(
@@ -21,7 +22,7 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
           dark:disabled:bg-input/80
           dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40
         `,
-        className,
+        className
       )}
       {...props}
     />

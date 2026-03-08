@@ -1,6 +1,6 @@
 import {
-  IconHeadphones, IconThumbUp
-} from '@tabler/icons-react';
+  Headphones, ThumbsUp
+} from 'lucide-react';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
@@ -27,17 +27,13 @@ export function PageHeader({
         <h1 className="text-lg font-semibold tracking-tight">{title}</h1>
       </div>
       <div className="flex items-center gap-3">
-        <Button variant="outline" size="sm" asChild>
-          <Link href={`mailto:${SUPPORT_EMAIL}`}>
-            <IconThumbUp />
-            <span className="hidden lg:block">Feedback</span>
-          </Link>
+        <Button variant="outline" size="sm" nativeButton={false} render={<Link href={`mailto:${SUPPORT_EMAIL}`} />}>
+          <ThumbsUp />
+          <span className="hidden lg:block">Feedback</span>
         </Button>
-        <Button variant="outline" size="sm" asChild>
-          <Link href={`mailto:${SUPPORT_EMAIL}`}>
-            <IconHeadphones />
-            <span className="hidden lg:block">Need help?</span>
-          </Link>
+        <Button variant="outline" size="sm" nativeButton={false} render={<Link href={`mailto:${SUPPORT_EMAIL}`} />}>
+          <Headphones />
+          <span className="hidden lg:block">Need help?</span>
         </Button>
       </div>
     </div>

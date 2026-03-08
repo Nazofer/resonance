@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 'use client';
 
 import * as React from 'react';
@@ -7,7 +6,7 @@ import {
 } from 'input-otp';
 
 import { cn } from '@/lib/utils';
-import { IconMinus } from '@tabler/icons-react';
+import { MinusIcon } from 'lucide-react';
 
 function InputOTP({
   className,
@@ -21,7 +20,7 @@ function InputOTP({
       data-slot="input-otp"
       containerClassName={cn(
         'cn-input-otp flex items-center has-disabled:opacity-50',
-        containerClassName,
+        containerClassName
       )}
       spellCheck={false}
       className={cn('disabled:cursor-not-allowed', className)}
@@ -40,7 +39,7 @@ function InputOTPGroup({ className, ...props }: React.ComponentProps<'div'>) {
           has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20
           dark:has-aria-invalid:ring-destructive/40
         `,
-        className,
+        className
       )}
       {...props}
     />
@@ -55,7 +54,7 @@ function InputOTPSlot({
   index: number
 }) {
   const inputOTPContext = React.useContext(OTPInputContext);
-  const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {};
+  const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
 
   return (
     <div
@@ -74,7 +73,7 @@ function InputOTPSlot({
           dark:bg-input/30
           dark:data-[active=true]:aria-invalid:ring-destructive/40
         `,
-        className,
+        className
       )}
       {...props}
     >
@@ -96,7 +95,7 @@ function InputOTPSeparator({ ...props }: React.ComponentProps<'div'>) {
       role="separator"
       {...props}
     >
-      <IconMinus />
+      <MinusIcon />
     </div>
   );
 }

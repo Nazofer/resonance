@@ -11,7 +11,7 @@ import {
   COST_PER_UNIT,
   TEXT_MAX_LENGTH,
 } from '@/features/text-to-speech/data/constants';
-import { IconCoins } from '@tabler/icons-react';
+import { Coins } from 'lucide-react';
 
 export function TextInputPanel() {
   const [text, setText] = useState('');
@@ -49,7 +49,7 @@ export function TextInputPanel() {
 
           <div className="flex items-center justify-between">
             <Badge variant="outline" className="gap-1.5 border-dashed">
-              <IconCoins className="size-3 text-chart-5" />
+              <Coins className="size-3 text-chart-5" />
               <span className="text-xs">
                 {text.length === 0 ? (
                   'Start typing to estimate'

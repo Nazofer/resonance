@@ -17,13 +17,14 @@ const alertVariants = cva(
     variants: {
       variant: {
         default: 'bg-card text-card-foreground',
-        destructive: `bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current`,
+        destructive:
+          'bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current',
       },
     },
     defaultVariants: {
       variant: 'default',
     },
-  },
+  }
 );
 
 function Alert({
@@ -52,7 +53,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
           [&_a]:underline [&_a]:underline-offset-3
           [&_a]:hover:text-foreground
         `,
-        className,
+        className
       )}
       {...props}
     />
@@ -74,7 +75,7 @@ function AlertDescription({
           [&_a]:hover:text-foreground
           [&_p:not(:last-child)]:mb-4
         `,
-        className,
+        className
       )}
       {...props}
     />
