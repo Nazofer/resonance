@@ -45,7 +45,7 @@ function DialogOverlay({
           data-open:animate-in data-open:fade-in-0
           data-closed:animate-out data-closed:fade-out-0
         `,
-        className
+        className,
       )}
       {...props}
     />
@@ -67,15 +67,13 @@ function DialogContent({
         data-slot="dialog-content"
         className={cn(
           `
-            fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)]
-            -translate-1/2 gap-4 rounded-xl bg-background p-4 text-sm ring-1
-            ring-foreground/10 duration-100 outline-none
+            fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-1/2 gap-4 rounded-xl
+            bg-background p-4 text-sm ring-1 ring-foreground/10 duration-100 outline-none
             sm:max-w-sm
             data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95
-            data-closed:animate-out data-closed:fade-out-0
-            data-closed:zoom-out-95
+            data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95
           `,
-          className
+          className,
         )}
         {...props}
       >
@@ -119,12 +117,8 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        `
-          -mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t
-          bg-muted/50 p-4
-          sm:flex-row sm:justify-end
-        `,
-        className
+        `-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 sm:flex-row sm:justify-end`,
+        className,
       )}
       {...props}
     >
@@ -159,12 +153,8 @@ function DialogDescription({
     <DialogPrimitive.Description
       data-slot="dialog-description"
       className={cn(
-        `
-          text-sm text-muted-foreground
-          *:[a]:underline *:[a]:underline-offset-3
-          *:[a]:hover:text-foreground
-        `,
-        className
+        `text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground`,
+        className,
       )}
       {...props}
     />

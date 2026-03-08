@@ -3,7 +3,11 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { IconChevronLeft, IconChevronRight, IconDots } from '@tabler/icons-react';
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconDots,
+} from '@tabler/icons-react';
 
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (
@@ -107,11 +111,8 @@ function PaginationEllipsis({
       aria-hidden
       data-slot="pagination-ellipsis"
       className={cn(
-        `
-          flex size-8 items-center justify-center
-          [&_svg:not([class*='size-'])]:size-4
-        `,
-        className
+        `flex size-8 items-center justify-center [&_svg:not([class*='size-'])]:size-4`,
+        className,
       )}
       {...props}
     >

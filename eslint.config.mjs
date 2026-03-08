@@ -180,6 +180,17 @@ const stylisticConfig = defineConfig([
       ],
       '@stylistic/operator-linebreak': ['warn', 'before'],
 
+      // Imports/exports with 2+ specifiers: one per line; object literals unchanged
+      '@stylistic/object-curly-newline': [
+        'warn',
+        {
+          ImportDeclaration: { minProperties: 2 },
+          ExportDeclaration: { minProperties: 2 },
+          ObjectExpression: { consistent: true },
+          ObjectPattern: { consistent: true },
+        },
+      ],
+
       // JSX-specific style rules
       '@stylistic/jsx-indent-props': ['warn', 2],
       '@stylistic/jsx-one-expression-per-line': 'off', // Too strict
@@ -200,6 +211,18 @@ const stylisticConfig = defineConfig([
         {
           multiline: 'consistent',
           singleline: 'forbid',
+        },
+      ],
+
+      // Max line length (align with common 80–100; ignore long strings/comments to avoid noise)
+      '@stylistic/max-len': [
+        'warn',
+        {
+          code: 120,
+          ignoreUrls: true,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+          ignoreRegExpLiterals: true,
         },
       ],
 
@@ -233,7 +256,14 @@ const tailwindcssConfig = defineConfig({
     // https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/enforce-consistent-line-wrapping.md
     'better-tailwindcss/enforce-consistent-line-wrapping': [
       'warn',
-      { group: 'newLine', preferSingleLine: true, printWidth: 80 },
+      {
+        printWidth: 120, // Maximum line length (0 = disabled)
+        classesPerLine: 0, // Maximum classes per line (0 = disabled)
+        group: 'newLine', // Group separation: 'emptyLine' | 'never' | 'newLine'
+        preferSingleLine: true, // Keep variants on single line until limits exceeded
+        indent: 2, // Indentation: number of spaces or 'tab'
+        lineBreakStyle: 'unix', // Line breaks: 'windows' (\r\n) | 'unix' (\n)
+      },
     ],
     'better-tailwindcss/no-unknown-classes': 'warn',
   },

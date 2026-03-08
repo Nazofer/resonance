@@ -1,4 +1,6 @@
-import { cva, type VariantProps } from 'class-variance-authority';
+import {
+  cva, type VariantProps
+} from 'class-variance-authority';
 import { Slot } from 'radix-ui';
 
 import { cn } from '@/lib/utils';
@@ -16,27 +18,23 @@ const buttonGroupVariants = cva(
   {
     variants: {
       orientation: {
-        horizontal:
-          `
-            [&>*:not(:first-child)]:rounded-l-none
-            [&>*:not(:first-child)]:border-l-0
-            [&>*:not(:last-child)]:rounded-r-none
-            [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg!
-          `,
-        vertical:
-          `
-            flex-col
-            [&>*:not(:first-child)]:rounded-t-none
-            [&>*:not(:first-child)]:border-t-0
-            [&>*:not(:last-child)]:rounded-b-none
-            [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg!
-          `,
+        horizontal: `
+          [&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0
+          [&>*:not(:last-child)]:rounded-r-none
+          [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg!
+        `,
+        vertical: `
+          flex-col
+          [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child)]:border-t-0
+          [&>*:not(:last-child)]:rounded-b-none
+          [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg!
+        `,
       },
     },
     defaultVariants: {
       orientation: 'horizontal',
     },
-  }
+  },
 );
 
 function ButtonGroup({
@@ -68,12 +66,11 @@ function ButtonGroupText({
     <Comp
       className={cn(
         `
-          flex items-center gap-2 rounded-lg border bg-muted px-2.5 text-sm
-          font-medium
+          flex items-center gap-2 rounded-lg border bg-muted px-2.5 text-sm font-medium
           [&_svg]:pointer-events-none
           [&_svg:not([class*='size-'])]:size-4
         `,
-        className
+        className,
       )}
       {...props}
     />
@@ -95,7 +92,7 @@ function ButtonGroupSeparator({
           data-horizontal:mx-px data-horizontal:w-auto
           data-vertical:my-px data-vertical:h-auto
         `,
-        className
+        className,
       )}
       {...props}
     />

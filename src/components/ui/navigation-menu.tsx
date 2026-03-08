@@ -18,11 +18,8 @@ function NavigationMenu({
       data-slot="navigation-menu"
       data-viewport={viewport}
       className={cn(
-        `
-          group/navigation-menu relative flex max-w-max flex-1 items-center
-          justify-center
-        `,
-        className
+        `group/navigation-menu relative flex max-w-max flex-1 items-center justify-center`,
+        className,
       )}
       {...props}
     >
@@ -41,7 +38,7 @@ function NavigationMenuList({
       data-slot="navigation-menu-list"
       className={cn(
         'group flex flex-1 list-none items-center justify-center gap-0',
-        className
+        className,
       )}
       {...props}
     />
@@ -63,9 +60,8 @@ function NavigationMenuItem({
 
 const navigationMenuTriggerStyle = cva(
   `
-    group/navigation-menu-trigger inline-flex h-9 w-max items-center
-    justify-center rounded-lg bg-background px-2.5 py-1.5 text-sm font-medium
-    transition-all outline-none
+    group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-lg bg-background px-2.5
+    py-1.5 text-sm font-medium transition-all outline-none
     hover:bg-muted
     focus:bg-muted
     focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1
@@ -75,7 +71,7 @@ const navigationMenuTriggerStyle = cva(
     data-open:bg-muted/50
     data-open:hover:bg-muted
     data-open:focus:bg-muted
-  `
+  `,
 );
 
 function NavigationMenuTrigger({
@@ -112,14 +108,11 @@ function NavigationMenuContent({
       className={cn(
         `
           top-0 left-0 w-full p-1 ease-[cubic-bezier(0.22,1,0.36,1)]
-          group-data-[viewport=false]/navigation-menu:top-full
-          group-data-[viewport=false]/navigation-menu:mt-1.5
+          group-data-[viewport=false]/navigation-menu:top-full group-data-[viewport=false]/navigation-menu:mt-1.5
           group-data-[viewport=false]/navigation-menu:overflow-hidden
-          group-data-[viewport=false]/navigation-menu:rounded-lg
-          group-data-[viewport=false]/navigation-menu:bg-popover
+          group-data-[viewport=false]/navigation-menu:rounded-lg group-data-[viewport=false]/navigation-menu:bg-popover
           group-data-[viewport=false]/navigation-menu:text-popover-foreground
-          group-data-[viewport=false]/navigation-menu:shadow-sm
-          group-data-[viewport=false]/navigation-menu:ring-1
+          group-data-[viewport=false]/navigation-menu:shadow-sm group-data-[viewport=false]/navigation-menu:ring-1
           group-data-[viewport=false]/navigation-menu:ring-foreground/10
           group-data-[viewport=false]/navigation-menu:duration-300
           data-[motion=from-end]:slide-in-from-right-52
@@ -128,8 +121,7 @@ function NavigationMenuContent({
           data-[motion=to-start]:slide-out-to-left-52
           data-[motion^=from-]:animate-in data-[motion^=from-]:fade-in
           data-[motion^=to-]:animate-out data-[motion^=to-]:fade-out
-          **:data-[slot=navigation-menu-link]:focus:ring-0
-          **:data-[slot=navigation-menu-link]:focus:outline-none
+          **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none
           md:absolute md:w-auto
           group-data-[viewport=false]/navigation-menu:data-open:animate-in
           group-data-[viewport=false]/navigation-menu:data-open:fade-in-0
@@ -138,7 +130,7 @@ function NavigationMenuContent({
           group-data-[viewport=false]/navigation-menu:data-closed:fade-out-0
           group-data-[viewport=false]/navigation-menu:data-closed:zoom-out-95
         `,
-        className
+        className,
       )}
       {...props}
     />
@@ -152,22 +144,20 @@ function NavigationMenuViewport({
   return (
     <div
       className={cn(
-        'absolute top-full left-0 isolate z-50 flex justify-center'
+        'absolute top-full left-0 isolate z-50 flex justify-center',
       )}
     >
       <NavigationMenuPrimitive.Viewport
         data-slot="navigation-menu-viewport"
         className={cn(
           `
-            origin-top-center relative mt-1.5
-            h-(--radix-navigation-menu-viewport-height) w-full overflow-hidden
-            rounded-lg bg-popover text-popover-foreground shadow-sm ring-1
-            ring-foreground/10 duration-100
+            origin-top-center relative mt-1.5 h-(--radix-navigation-menu-viewport-height) w-full overflow-hidden
+            rounded-lg bg-popover text-popover-foreground shadow-sm ring-1 ring-foreground/10 duration-100
             md:w-(--radix-navigation-menu-viewport-width)
             data-open:animate-in data-open:zoom-in-90
             data-closed:animate-out data-closed:zoom-out-95
           `,
-          className
+          className,
         )}
         {...props}
       />
@@ -184,19 +174,17 @@ function NavigationMenuLink({
       data-slot="navigation-menu-link"
       className={cn(
         `
-          flex items-center gap-2 rounded-lg p-2 text-sm transition-all
-          outline-none
+          flex items-center gap-2 rounded-lg p-2 text-sm transition-all outline-none
           hover:bg-muted
           focus:bg-muted
-          focus-visible:ring-3 focus-visible:ring-ring/50
-          focus-visible:outline-1
+          focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1
           in-data-[slot=navigation-menu-content]:rounded-md
           data-active:bg-muted/50
           data-active:hover:bg-muted
           data-active:focus:bg-muted
           [&_svg:not([class*='size-'])]:size-4
         `,
-        className
+        className,
       )}
       {...props}
     />
@@ -216,14 +204,11 @@ function NavigationMenuIndicator({
           data-[state=hidden]:animate-out data-[state=hidden]:fade-out
           data-[state=visible]:animate-in data-[state=visible]:fade-in
         `,
-        className
+        className,
       )}
       {...props}
     >
-      <div className="
-        relative top-[60%] size-2 rotate-45 rounded-tl-sm bg-border shadow-md
-      "
-      />
+      <div className="relative top-[60%] size-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
     </NavigationMenuPrimitive.Indicator>
   );
 }

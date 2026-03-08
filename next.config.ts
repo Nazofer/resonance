@@ -1,11 +1,16 @@
 import type { NextConfig } from 'next';
-
-// Валідація env на етапі збірки (Next.js 16+)
-import './src/lib/env';
+import path from 'path';
 
 const nextConfig: NextConfig = {
   /* config options here */
+  devIndicators: false,
   reactCompiler: true,
+  turbopack: {
+    root: path.join(__dirname, '..'),
+  },
+  experimental: {
+    proxyClientMaxBodySize: '20mb',
+  },
 };
 
 export default nextConfig;
