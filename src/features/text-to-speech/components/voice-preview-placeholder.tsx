@@ -4,6 +4,7 @@ import {
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { SUPPORT_EMAIL } from '@/features/dashboard/data/constants';
 
 export function VoicePreviewPlaceholder() {
   return (
@@ -32,11 +33,9 @@ export function VoicePreviewPlaceholder() {
           Once you generate, your audio result will appear here. Sit back and relax.
         </p>
       </div>
-      <Button variant="outline" size="sm" nativeButton={false} render={<Link href="mailto:business@codewithantonio.com" />}>
-        <Link href="mailto:business@codewithantonio.com">
-          <Book />
-          Don&apos;t know how?
-        </Link>
+      <Button variant="outline" size="sm" nativeButton={false} render={<Link href={`mailto:${SUPPORT_EMAIL}`} />}>
+        <Book />
+        Don&apos;t know how?
       </Button>
     </div>
   );

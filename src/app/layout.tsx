@@ -4,6 +4,7 @@ import {
 } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
+import { ThemeProvider } from '@/components/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/sonner';
 import { ClerkProvider } from '@clerk/nextjs';
@@ -35,12 +36,18 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={cn('font-sans', 'font-sans', 'font-sans', figtree.variable)}>
+      <html
+        lang="en"
+        suppressHydrationWarning
+        className={cn('font-sans', 'font-sans', 'font-sans', figtree.variable)}
+      >
         <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
-          <TooltipProvider>
-            {children}
-            <Toaster />
-          </TooltipProvider>
+          <ThemeProvider attribute="class" enableSystem>
+            <TooltipProvider>
+              {children}
+              <Toaster />
+            </TooltipProvider>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
