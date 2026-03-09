@@ -265,7 +265,12 @@ const tailwindcssConfig = defineConfig({
         lineBreakStyle: 'unix', // Line breaks: 'windows' (\r\n) | 'unix' (\n)
       },
     ],
-    'better-tailwindcss/no-unknown-classes': 'warn',
+    'better-tailwindcss/no-unknown-classes': [
+      'warn',
+      {
+        ignore: ['data-', 'group-', 'dark', 'toaster'],
+      },
+    ],
   },
   settings: {
     'better-tailwindcss': {

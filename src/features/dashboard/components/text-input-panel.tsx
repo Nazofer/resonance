@@ -27,17 +27,21 @@ export function TextInputPanel() {
   return (
     <div
       className={cn(
-        'rounded-[22px] bg-linear-185 from-[#ff8ee3] from-15% via-[#57d7e0] via-39% to-[#dbf1f2] to-85% p-0.5',
-        'shadow-[0_0_0_4px_white]',
+        'rounded-[22px] bg-linear-185 from-[#F97316] from-15% via-[#FBBF24] via-39% to-[#FDE68A] to-85% p-0.5',
+        'shadow-[0_0_0_4px_var(--background)]',
       )}
     >
       {/* Using px values for border-radius to ensure proper gradient border math (outer - padding = inner). */}
       {/* Standard classes like rounded-4xl use CSS calc() which doesn't align cleanly at corners. */}
-      <div className="rounded-[20px] bg-[#F9F9F9] p-1">
-        <div className="space-y-4 rounded-2xl bg-white p-4 drop-shadow-xs">
+      <div className="rounded-[20px] bg-background/95 p-1">
+        <div className="space-y-4 rounded-2xl bg-card p-4 drop-shadow-xs">
           <Textarea
             placeholder="Start typing or paste your text here..."
-            className="min-h-35 resize-none border-0 bg-transparent p-0 shadow-none focus-visible:ring-0"
+            className="
+              min-h-35 resize-none border-0 bg-transparent p-0 shadow-none
+              focus-visible:ring-0
+              dark:bg-transparent
+            "
             value={text}
             onChange={(e) => {
               setText(e.target.value);

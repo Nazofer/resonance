@@ -72,7 +72,7 @@ function NavSection({ label, items, pathname }: NavSectionProps) {
                 className={cn(
                   'h-9 border border-transparent px-3 py-2 text-[13px] font-medium tracking-tight',
                   'data-[active=true]:border-border',
-                  'data-[active=true]:shadow-[0px_1px_1px_0px_rgba(44,54,53,0.03),inset_0px_0px_0px_2px_white]',
+                  'data-[active=true]:bg-sidebar-accent data-[active=true]:shadow-[0px_1px_1px_0px_rgba(44,54,53,0.03)]',
                 )}
               >
                 <item.icon />
@@ -134,7 +134,7 @@ export function DashboardSidebar() {
           <div
             className={cn(
               'flex items-center gap-2 pl-1',
-              'group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:pl-0',
+              // 'group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:pl-0',
             )}
           >
             <Image
@@ -159,14 +159,19 @@ export function DashboardSidebar() {
               <OrganizationSwitcher
                 hidePersonal
                 fallback={(
-                  <Skeleton className="h-8.5 w-full rounded-md border bg-white group-data-[collapsible=icon]:size-8" />
+                  <Skeleton
+                    className={cn(
+                      'h-8.5 w-full rounded-md border bg-sidebar-accent',
+                      'group-data-[collapsible=icon]:size-8',
+                    )}
+                  />
                 )}
                 appearance={{
                   elements: {
                     rootBox:
-                      'w-full! group-data-[collapsible=icon]:w-auto! group-data-[collapsible=icon]:flex! group-data-[collapsible=icon]:justify-center!',
+                    'w-full! group-data-[collapsible=icon]:w-auto!',
                     organizationSwitcherTrigger:
-                      'w-full! justify-between! bg-white! border! border-border! rounded-md! pl-1! pr-2! py-1! gap-3! '
+                      'w-full! justify-between! bg-sidebar-accent! border! border-sidebar-border! rounded-md! pl-1! pr-2! py-1! gap-3! '
                       + 'group-data-[collapsible=icon]:w-auto! group-data-[collapsible=icon]:p-1! '
                       + 'shadow-[0px_1px_1.5px_0px_rgba(44,54,53,0.03)]!',
                     organizationPreview: 'gap-2!',
@@ -200,7 +205,7 @@ export function DashboardSidebar() {
                 fallback={(
                   <Skeleton
                     className={cn(
-                      'h-8.5 w-full rounded-md border border-border bg-white',
+                      'h-8.5 w-full rounded-md border border-sidebar-border bg-sidebar-accent',
                       'group-data-[collapsible=icon]:size-8',
                     )}
                   />
@@ -210,7 +215,7 @@ export function DashboardSidebar() {
                     rootBox:
                       'w-full! group-data-[collapsible=icon]:w-auto! group-data-[collapsible=icon]:flex! group-data-[collapsible=icon]:justify-center!',
                     userButtonTrigger:
-                      'w-full! justify-between! bg-white! border! border-border! rounded-md! pl-1! pr-2! py-1! shadow-[0px_1px_1.5px_0px_rgba(44,54,53,0.03)]! group-data-[collapsible=icon]:w-auto! group-data-[collapsible=icon]:p-1! group-data-[collapsible=icon]:after:hidden! [--border:color-mix(in_srgb,transparent,var(--clerk-color-neutral,#000000)_15%)]!',
+                      'w-full! justify-between! bg-sidebar-accent! border! border-sidebar-border! rounded-md! pl-1! pr-2! py-1! shadow-[0px_1px_1.5px_0px_rgba(44,54,53,0.03)]! group-data-[collapsible=icon]:w-auto! group-data-[collapsible=icon]:p-1! group-data-[collapsible=icon]:after:hidden! [--border:var(--sidebar-border)]!',
                     userButtonBox: 'flex-row-reverse! gap-2!',
                     userButtonOuterIdentifier:
                       'text-[13px]! tracking-tight! font-medium! text-foreground! pl-0! group-data-[collapsible=icon]:hidden!',
