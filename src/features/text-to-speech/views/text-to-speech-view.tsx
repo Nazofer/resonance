@@ -1,3 +1,4 @@
+import { SettingsPanel } from '../components/settings-panel';
 import TextInputPanel from '../components/text-input-panel';
 import { VoicePreviewPlaceholder } from '../components/voice-preview-placeholder';
 
@@ -8,6 +9,7 @@ const TextToSpeechView = () => {
         <TextInputPanel />
         <VoicePreviewPlaceholder />
       </div>
+      <SettingsPanel />
     </div>
   );
 };
