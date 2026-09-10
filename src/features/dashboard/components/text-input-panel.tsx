@@ -37,11 +37,11 @@ export function TextInputPanel() {
         <div className="space-y-4 rounded-2xl bg-card p-4 drop-shadow-xs">
           <Textarea
             placeholder="Start typing or paste your text here..."
-            className="
+            className={`
               min-h-35 resize-none border-0 bg-transparent p-0 shadow-none
               focus-visible:ring-0
               dark:bg-transparent
-            "
+            `}
             value={text}
             onChange={(e) => {
               setText(e.target.value);

@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Coins } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
@@ -11,31 +10,41 @@ import {
   COST_PER_UNIT,
   TEXT_MAX_LENGTH,
 } from '@/features/text-to-speech/data/constants';
+import { useTypedAppFormContext } from '@/hooks/use-app-form';
+import GenerateButton from './generate-button';
+import { ttsFormOptions } from './text-to-speech-form';
+import { useStore } from '@tanstack/react-form';
 
 const TextInputPanel = () => {
-  const [text, setText] = useState('');
+  const form = useTypedAppFormContext(ttsFormOptions);
 
-  const onTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
-  };
+  const text = useStore(form.store, store => store.values.text);
+  const isSubmitting = useStore(form.store, store => store.isSubmitting);
+  const isValid = useStore(form.store, store => store.isValid);
+
 
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col">
       <div className="relative min-h-0 flex-1">
-        <Textarea
-          placeholder="Start typing or paste your text here..."
-          className={cn(
-            `
-              absolute inset-0 resize-none border-0 bg-transparent p-4 pb-6 text-base! leading-relaxed tracking-tight
-              wrap-break-word shadow-none
-              focus-visible:ring-0
-              lg:p-6 lg:pb-8
-            `,
+        <form.Field name="text">
+          {field => (
+            <Textarea
+              value={field.state.value}
+              onChange={(event) => { field.handleChange(event.target.value); }}
+              placeholder="Start typing or paste your text here..."
+              className={cn(
+                `
+                  absolute inset-0 resize-none border-0 bg-transparent p-4 pb-6 text-base! leading-relaxed
+                  tracking-tight wrap-break-word shadow-none
+                  focus-visible:ring-0
+                  lg:p-6 lg:pb-8
+                `,
+              )}
+              maxLength={TEXT_MAX_LENGTH}
+              disabled={isSubmitting}
+            />
           )}
-          value={text}
-          onChange={onTextChange}
-          maxLength={TEXT_MAX_LENGTH}
-        />
+        </form.Field>
         {/* Bottom fade overlay */}
         <div className={cn(
           `pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-linear-to-t from-background to-transparent`
@@ -46,21 +55,18 @@ const TextInputPanel = () => {
       <div className="shrink-0 p-4 lg:p-6">
         {/* Mobile layout */}
         <div className="flex flex-col gap-3 lg:hidden">
-          <div className="flex items-center gap-2">
-            {/* <SettingsDrawer>
+          {/*<div className="flex items-center gap-2">
+             <SettingsDrawer>
               <VoiceSelectorButton />
             </SettingsDrawer>
-            <HistoryDrawer /> */}
-          </div>
-          {/* <GenerateButton
+            <HistoryDrawer />
+          </div>*/}
+          <GenerateButton
             className="w-full"
             disabled={isSubmitting}
             isSubmitting={isSubmitting}
-            onSubmit={() => form.handleSubmit()}
-          /> */}
-          <Button className="w-full">
-            Generate speech
-          </Button>
+            onSubmit={() => void form.handleSubmit()}
+          />
         </div>
         {/* Desktop layout */}
         {text.length > 0 ? (
@@ -81,12 +87,12 @@ const TextInputPanel = () => {
                   &nbsp;/&nbsp;{TEXT_MAX_LENGTH.toLocaleString()} characters
                 </span>
               </p>
-              {/* <GenerateButton
+              <GenerateButton
                 size="sm"
                 disabled={isSubmitting || !isValid}
                 isSubmitting={isSubmitting}
-                onSubmit={() => form.handleSubmit()}
-              /> */}
+                onSubmit={() => void form.handleSubmit()}
+              />
               <Button size="sm">
                 Generate speech
               </Button>

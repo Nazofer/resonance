@@ -85,11 +85,11 @@ function NavigationMenuTrigger({
     >
       {children}{' '}
       <ChevronDownIcon
-        className="
+        className={`
           relative top-px ml-1 size-3 transition duration-300
           group-data-popup-open/navigation-menu-trigger:rotate-180
           group-data-open/navigation-menu-trigger:rotate-180
-        "
+        `}
         aria-hidden="true"
       />
     </NavigationMenuPrimitive.Trigger>
@@ -164,7 +164,7 @@ function NavigationMenuPositioner({
         )}
         {...props}
       >
-        <NavigationMenuPrimitive.Popup className="
+        <NavigationMenuPrimitive.Popup className={`
           data-[ending-style]:easing-[ease]
           xs:w-(--popup-width)
           relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg bg-popover
@@ -173,7 +173,7 @@ function NavigationMenuPositioner({
           ease-[cubic-bezier(0.22,1,0.36,1)] outline-none
           data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150
           data-starting-style:scale-90 data-starting-style:opacity-0
-        "
+        `}
         >
           <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
         </NavigationMenuPrimitive.Popup>

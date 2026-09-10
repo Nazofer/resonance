@@ -162,10 +162,10 @@ function MenubarCheckboxItem({
       checked={checked}
       {...props}
     >
-      <span className="
+      <span className={`
         pointer-events-none absolute left-1.5 flex size-4 items-center justify-center
         [&_svg:not([class*='size-'])]:size-4
-      "
+      `}
       >
         <MenuPrimitive.CheckboxItemIndicator>
           <CheckIcon />
@@ -209,10 +209,10 @@ function MenubarRadioItem({
       )}
       {...props}
     >
-      <span className="
+      <span className={`
         pointer-events-none absolute left-1.5 flex size-4 items-center justify-center
         [&_svg:not([class*='size-'])]:size-4
-      "
+      `}
       >
         <MenuPrimitive.RadioItemIndicator>
           <CheckIcon />

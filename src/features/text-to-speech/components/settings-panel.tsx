@@ -9,8 +9,8 @@ import {
   TabsTrigger
 } from '@/components/ui/tabs';
 
-// import { SettingsPanelHistory } from './settings-panel-history';
-// import { SettingsPanelSettings } from './settings-panel-settings';
+import SettingsPanelHistory from './settings-panel-history';
+import SettingsPanelSettings from './settings-panel-settings';
 import { cn } from '@/lib/utils';
 
 const tabTriggerClassName
@@ -27,10 +27,10 @@ export function SettingsPanel() {
         defaultValue="settings"
         className="flex h-full min-h-0 flex-col gap-y-0"
       >
-        <TabsList className="
+        <TabsList className={`
           h-12 w-full rounded-none border-b bg-transparent p-0
           group-data-[orientation=horizontal]/tabs:h-12
-        "
+        `}
         >
           <TabsTrigger value="settings" className={tabTriggerClassName}>
             <Settings className="size-4" />
@@ -45,13 +45,13 @@ export function SettingsPanel() {
           value="settings"
           className="mt-0 flex min-h-0 flex-1 flex-col overflow-y-auto"
         >
-          {/* <SettingsPanelSettings /> */}
+          <SettingsPanelSettings />
         </TabsContent>
         <TabsContent
           value="history"
           className="mt-0 flex min-h-0 flex-1 flex-col overflow-y-auto"
         >
-          {/* <SettingsPanelHistory /> */}
+          <SettingsPanelHistory />
         </TabsContent>
       </Tabs>
     </div>
