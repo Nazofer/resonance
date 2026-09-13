@@ -11,6 +11,7 @@ import { useTypedAppFormContext } from '@/hooks/use-app-form';
 
 import { sliders } from '../data/sliders';
 import { ttsFormOptions } from './text-to-speech-form';
+import VoiceSelector from './voice-selector';
 
 const SettingsPanelSettings: React.FC = () => {
   const form = useTypedAppFormContext(ttsFormOptions);
@@ -19,9 +20,7 @@ const SettingsPanelSettings: React.FC = () => {
   return (
     <>
       <div className="border-b border-dashed p-4">
-        <p className="text-sm text-muted-foreground">
-          Voice selector coming soon
-        </p>
+        <VoiceSelector />
       </div>
 
       <div className="flex-1 p-4">
