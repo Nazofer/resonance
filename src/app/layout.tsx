@@ -8,6 +8,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/sonner';
 import { ClerkProvider } from '@clerk/nextjs';
+import { TRPCReactProvider } from '@/trpc/client';
 
 const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -36,20 +37,22 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html
-        lang="en"
-        suppressHydrationWarning
-        className={cn('font-sans', 'font-sans', 'font-sans', figtree.variable)}
-      >
-        <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
-          <ThemeProvider attribute="class" enableSystem>
-            <TooltipProvider>
-              {children}
-              <Toaster />
-            </TooltipProvider>
-          </ThemeProvider>
-        </body>
-      </html>
+      <TRPCReactProvider>
+        <html
+          lang="en"
+          suppressHydrationWarning
+          className={cn('font-sans', 'font-sans', 'font-sans', figtree.variable)}
+        >
+          <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
+            <ThemeProvider attribute="class" enableSystem>
+              <TooltipProvider>
+                {children}
+                <Toaster />
+              </TooltipProvider>
+            </ThemeProvider>
+          </body>
+        </html>
+      </TRPCReactProvider>
     </ClerkProvider>
   );
 }
