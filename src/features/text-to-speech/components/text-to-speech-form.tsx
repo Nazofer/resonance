@@ -1,36 +1,54 @@
 'use client';
 
-import { useAppForm } from '@/hooks/use-app-form';
+import {
+  useAppForm, useTypedAppFormContext
+} from '@/hooks/use-app-form';
 import { formOptions } from '@tanstack/react-form';
 import { z } from 'zod';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { useTRPC } from '@/trpc/client';
+import {
+  DEFAULT_TTS_MODEL, defaultTtsModelSettings, ttsModelSettingsSchema, type TtsModelSettings
+} from '../data/tts-models';
+import {
+  checkLanguage, detectLanguage
+} from '../lib/language';
 
 const ttsFormSchema = z.object({
   text: z.string().min(1, 'Please enter some text!'),
   voiceId: z.string().min(1, 'Please select a voice!'),
-  topP: z.number(),
-  topK: z.number(),
-  temperature: z.number(),
-  repetitionPenalty: z.number(),
-});
+}).and(ttsModelSettingsSchema);
 
 export type TTSFormValues = z.infer<typeof ttsFormSchema>;
 
 export const defaultTTSFormValues: TTSFormValues = {
   text: '',
   voiceId: '',
-  temperature: 0.8,
-  topP: 0.95,
-  topK: 1000,
-  repetitionPenalty: 1.2,
+  ...defaultTtsModelSettings(DEFAULT_TTS_MODEL),
 };
 
 export const ttsFormOptions = formOptions({
   defaultValues: defaultTTSFormValues,
 });
+
+interface ModelSettingsSetter {
+  setFieldValue: (...args: ['settings', TtsModelSettings['settings']] | ['model', TtsModelSettings['model']]) => void
+}
+
+// Settings belong to a model, so both always change together
+const setModelSettings = (form: ModelSettingsSetter, value: TtsModelSettings) => {
+  form.setFieldValue('settings', value.settings);
+  form.setFieldValue('model', value.model);
+};
+
+export const useSetModelSettings = () => {
+  const form = useTypedAppFormContext(ttsFormOptions);
+  return (value: TtsModelSettings) => {
+    setModelSettings(form, value);
+  };
+};
 
 
 interface TTSFormProps extends React.PropsWithChildren {
@@ -49,15 +67,23 @@ const TTSForm: React.FC<TTSFormProps> = ({ defaultValues, children }) => {
     validators: {
       onSubmit: ttsFormSchema,
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
+      const modelSettings = ttsModelSettingsSchema.parse(value);
+      const languageIssue = checkLanguage(detectLanguage(value.text), modelSettings);
+
+      if (languageIssue) {
+        const { fix } = languageIssue;
+        toast.error(languageIssue.message, fix && {
+          action: { label: fix.label, onClick: () => { setModelSettings(formApi, fix.value); } },
+        });
+        return;
+      }
+
       try {
         const data = await createTTSMutation.mutateAsync({
           text: value.text.trim(),
           voiceId: value.voiceId,
-          temperature: value.temperature,
-          topP: value.topP,
-          topK: value.topK,
-          repetitionPenalty: value.repetitionPenalty,
+          ...modelSettings,
         });
 
         toast.success('Audio generated successfully!');

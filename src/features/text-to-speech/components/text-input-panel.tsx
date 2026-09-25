@@ -17,6 +17,7 @@ import SettingsDrawer from './settings-drawer';
 import VoiceSelectorButton from './voice-selector-button';
 import HistoryDrawer from './history-drawer';
 import { PromptSuggestions } from './prompt-suggestions';
+import LanguageNotice from './language-notice';
 
 const TextInputPanel = () => {
   const form = useTypedAppFormContext(ttsFormOptions);
@@ -56,6 +57,7 @@ const TextInputPanel = () => {
       </div>
       {/* Action bar */}
       <div className="shrink-0 p-4 lg:p-6">
+        <LanguageNotice />
         {/* Mobile layout */}
         <div className="flex flex-col gap-3 lg:hidden">
           <div className="flex items-center gap-2">
