@@ -11,6 +11,9 @@ import {
 } from '../contexts/tts-voices-contexts';
 import { VoicePreviewPanel } from '../components/voice-preview-panel';
 import { VoicePreviewMobile } from '../components/voice-preview-panel-mobile';
+import {
+  DEFAULT_TTS_MODEL, defaultTtsModelSettings, ttsModelSettingsSchema
+} from '../data/tts-models';
 
 
 interface TextToSpeechDetailViewProps {
@@ -41,20 +44,20 @@ const TextToSpeechDetailView = ({ generationId }: TextToSpeechDetailViewProps) =
     ? data.voiceId
     : fallbackVoiceId;
 
-  const defaultValues: TTSFormValues = useMemo(() => ({
-    text: data.text,
-    voiceId: resolvedVoiceId,
-    temperature: data.temperature,
-    topP: data.topP,
-    topK: data.topK,
-    repetitionPenalty: data.repetitionPenalty,
-  }), [
+  const defaultValues: TTSFormValues = useMemo(() => {
+    const modelSettings = ttsModelSettingsSchema.safeParse({ model: data.model, settings: data.settings });
+
+    return {
+      text: data.text,
+      voiceId: resolvedVoiceId,
+      // Unknown/removed model or stale settings shape -> fall back to defaults
+      ...(modelSettings.success ? modelSettings.data : defaultTtsModelSettings(DEFAULT_TTS_MODEL)),
+    };
+  }, [
     data.text,
     resolvedVoiceId,
-    data.temperature,
-    data.topP,
-    data.topK,
-    data.repetitionPenalty
+    data.model,
+    data.settings,
   ]);
 
   const TTSVoicesContextValue: TTSVoicesContextValue = useMemo(() => ({
