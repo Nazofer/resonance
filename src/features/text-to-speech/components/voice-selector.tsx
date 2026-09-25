@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useStore } from '@tanstack/react-form';
 
 import { VOICE_CATEGORY_LABELS } from '@/features/voices/data/voice-categories';
@@ -22,6 +23,8 @@ const VoiceSelector = () => {
 
   const voiceId = useStore(form.store, state => state.values.voiceId);
   const isSubmitting = useStore(form.store, state => state.isSubmitting);
+  // Modal drawer blocks pointer events outside itself, so portal the popup into it when nested
+  const [portalContainer, setPortalContainer] = useState<HTMLElement>();
 
   const selectedVoice = allVoices.find(voice => voice.id === voiceId);
   const hasMissingSelectedVoice = !!voiceId && !selectedVoice;
@@ -39,7 +42,10 @@ const VoiceSelector = () => {
         onValueChange={(value) => { if (value) form.setFieldValue('voiceId', value); }}
         disabled={isSubmitting}
       >
-        <SelectTrigger className="h-auto w-full gap-1 rounded-lg bg-white px-2 py-1">
+        <SelectTrigger
+          ref={(el: HTMLElement | null) => { setPortalContainer(el?.closest<HTMLElement>('[data-slot="drawer-content"]') ?? undefined); }}
+          className="h-auto w-full gap-1 rounded-lg bg-white px-2 py-1"
+        >
           <SelectValue>
             <>
               <VoiceAvatar seed={currentVoice.id} name={currentVoice.name} />
@@ -50,7 +56,7 @@ const VoiceSelector = () => {
             </>
           </SelectValue>
         </SelectTrigger>
-        <SelectContent alignItemWithTrigger={false}>
+        <SelectContent alignItemWithTrigger={false} container={portalContainer}>
           {hasMissingSelectedVoice && (
             <>
               <SelectGroup>
