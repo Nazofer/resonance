@@ -152,7 +152,7 @@ export function DashboardSidebar() {
             >
               Resonance
             </span>
-            <SidebarTrigger className="ml-auto lg:hidden" />
+            <SidebarTrigger className="ml-auto group-data-[collapsible=icon]:hidden lg:hidden" />
           </div>
           <SidebarMenu>
             <SidebarMenuItem>

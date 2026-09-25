@@ -3,7 +3,6 @@
 import { Coins } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import {
@@ -93,9 +92,6 @@ const TextInputPanel = () => {
                 isSubmitting={isSubmitting}
                 onSubmit={() => void form.handleSubmit()}
               />
-              <Button size="sm">
-                Generate speech
-              </Button>
             </div>
           </div>
         ) : (
