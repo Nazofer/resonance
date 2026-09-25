@@ -4,6 +4,7 @@ import {
 } from '@trpc/server';
 import { cache } from 'react';
 import superjson from 'superjson';
+import * as Sentry from '@sentry/nextjs';
 
 export const createTRPCContext = cache(() => {
   /**
@@ -23,13 +24,19 @@ const t = initTRPC.create({
   transformer: superjson,
 });
 
+const sentryMiddleware = t.middleware(
+  Sentry.trpcMiddleware({
+    attachRpcInput: true,
+  }),
+);
+
 // Base router and procedure helpers
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
-export const baseProcedure = t.procedure;
+export const baseProcedure = t.procedure.use(sentryMiddleware); //sentrified base
 
 // Authenticated procedure - calls auth() only when needed
-export const authProcedure = t.procedure.use(async ({ next }) => {
+export const authProcedure = baseProcedure.use(async ({ next }) => {
   const { userId } = await auth();
 
   if (!userId) {
@@ -43,7 +50,7 @@ export const authProcedure = t.procedure.use(async ({ next }) => {
 
 
 // Organization procedure - requires userId and orgId
-export const orgProcedure = t.procedure.use(async ({ next }) => {
+export const orgProcedure = baseProcedure.use(async ({ next }) => {
   const { userId, orgId } = await auth();
 
   if (!userId) {
@@ -53,6 +60,9 @@ export const orgProcedure = t.procedure.use(async ({ next }) => {
   if (!orgId) {
     throw new TRPCError({ code: 'FORBIDDEN', message: 'Organization required' });
   }
+
+  Sentry.setUser({ id: userId });
+  Sentry.setTag('orgId', orgId);
 
   return next({
     ctx: { userId, orgId }

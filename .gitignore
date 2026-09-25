@@ -56,3 +56,6 @@ __pycache__/
 
 # local TTS test output
 /output.wav
+
+# Sentry Config File
+.env.sentry-build-plugin
