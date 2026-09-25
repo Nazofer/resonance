@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs';
 import { auth } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/db';
 import { getSignedAudioUrl } from '@/lib/r2';
@@ -31,6 +32,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ generation
   const audioResponse = await fetch(signedUrl);
 
   if (!audioResponse.ok) {
+    Sentry.logger.error('Failed to fetch audio from R2', { orgId, generationId, status: audioResponse.status });
     return new Response('Failed to fetch audio', { status: 502 });
   }
 
