@@ -20,6 +20,29 @@ export const SYSTEM_VOICE_NAMES = [
   'Marisol',
   'Meera',
   'Walter',
+  // Ukrainian (OmniVoice)
+  'Kateryna',
+  'Lada',
+  'Mykyta',
+  'Oleksa',
+  'Tetiana',
+  // Other languages (OmniVoice)
+  'Anna',
+  'Beatriz',
+  'Camille',
+  'Dmitry',
+  'Giulia',
+  'Jakub',
+  'Julien',
+  'Lucia',
+  'Lukas',
+  'Marco',
+  'Mateo',
+  'Mei',
+  'Olga',
+  'Rafael',
+  'Wei',
+  'Zofia',
 ] as const;
 
 export type SystemVoiceName = (typeof SYSTEM_VOICE_NAMES)[number];

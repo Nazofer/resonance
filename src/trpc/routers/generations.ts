@@ -3,10 +3,13 @@ import { z } from 'zod';
 // import { polar } from '@/lib/polar';
 // import { env } from '@/lib/env';
 import { TRPCError } from '@trpc/server';
-import { chatterbox } from '@/lib/chatterbox-client';
+import { synthesize } from '@/lib/tts';
 import { prisma } from '@/lib/db';
 import { uploadAudio } from '@/lib/r2';
 import { TEXT_MAX_LENGTH } from '@/features/text-to-speech/data/constants';
+import {
+  ttsModels, ttsModelSettingsSchema
+} from '@/features/text-to-speech/data/tts-models';
 import {
   createTRPCRouter, orgProcedure
 } from '../init';
@@ -52,11 +55,7 @@ export const generationsRouter = createTRPCRouter({
       z.object({
         text: z.string().min(1).max(TEXT_MAX_LENGTH),
         voiceId: z.string().min(1),
-        temperature: z.number().min(0).max(2).default(0.8),
-        topP: z.number().min(0).max(1).default(0.95),
-        topK: z.number().min(1).max(10000).default(1000),
-        repetitionPenalty: z.number().min(1).max(2).default(1.2),
-      })
+      }).and(ttsModelSettingsSchema)
     )
     .mutation(async ({ input, ctx }) => {
       // Check for active subscription before generation
@@ -95,6 +94,7 @@ export const generationsRouter = createTRPCRouter({
           id: true,
           name: true,
           r2ObjectKey: true,
+          transcript: true,
         },
       });
 
@@ -112,49 +112,45 @@ export const generationsRouter = createTRPCRouter({
         });
       }
 
+      if (ttsModels[input.model].requiresTranscript && !voice.transcript) {
+        throw new TRPCError({
+          code: 'PRECONDITION_FAILED',
+          message: 'This voice has no transcript yet, which the selected model needs',
+        });
+      }
+
       Sentry.logger.info('Generation started', {
         orgId: ctx.orgId,
         voiceId: input.voiceId,
+        model: input.model,
         textLength: input.text.length,
       });
 
-      const { data, error, response } = await chatterbox.POST('/generate', {
-        body: {
-          prompt: input.text,
-          voice_key: voice.r2ObjectKey,
-          temperature: input.temperature,
-          top_p: input.topP,
-          top_k: input.topK,
-          repetition_penalty: input.repetitionPenalty,
-          norm_loudness: true,
-        },
-        parseAs: 'arrayBuffer',
-      });
+      let audio: ArrayBuffer;
 
-      if (error) {
-        // Chatterbox returns { detail } with the underlying exception
-        Sentry.logger.error('Chatterbox generation failed', {
+      try {
+        audio = await synthesize(input.model, {
+          text: input.text,
+          voiceKey: voice.r2ObjectKey,
+          voiceTranscript: voice.transcript,
+          settings: input.settings,
+        });
+      } catch (err) {
+        Sentry.logger.error('TTS generation failed', {
           orgId: ctx.orgId,
           voiceId: input.voiceId,
-          status: response.status,
-          detail: JSON.stringify(error),
+          model: input.model,
+          detail: err instanceof Error ? err.message : String(err),
         });
 
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Failed to generate audio',
-          cause: new Error(`Chatterbox ${response.status}: ${JSON.stringify(error)}`),
+          cause: err,
         });
       }
 
-      if (!(data instanceof ArrayBuffer)) {
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Invalid audio response',
-        });
-      }
-
-      const buffer = Buffer.from(data);
+      const buffer = Buffer.from(audio);
       let generationId: string | null = null;
       let r2ObjectKey: string | null = null;
 
@@ -165,10 +161,8 @@ export const generationsRouter = createTRPCRouter({
             text: input.text,
             voiceName: voice.name,
             voiceId: voice.id,
-            temperature: input.temperature,
-            topP: input.topP,
-            topK: input.topK,
-            repetitionPenalty: input.repetitionPenalty,
+            model: input.model,
+            settings: input.settings,
           },
           select: {
             id: true,

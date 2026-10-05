@@ -44,6 +44,8 @@ model Voice {
   language    String        @default("en-US")
   variant     VoiceVariant
   r2ObjectKey String?
+  // what the reference clip says; required by OmniVoice cloning
+  transcript  String?
 
   generations Generation[]
 
@@ -62,13 +64,12 @@ model Generation {
   voiceId String?
   voice   Voice?  @relation(fields: [voiceId], references: [id], onDelete: SetNull)
 
-  text              String
-  voiceName         String
-  r2ObjectKey       String?
-  temperature       Float
-  topP              Float
-  topK              Int
-  repetitionPenalty Float
+  text        String
+  voiceName   String
+  r2ObjectKey String?
+  // TTS engine id + its engine-specific settings, validated by ttsModelSettingsSchema
+  model       String  @default("chatterbox")
+  settings    Json
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

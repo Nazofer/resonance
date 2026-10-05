@@ -5,6 +5,8 @@ export const env = createEnv({
   server: {
     CHATTERBOX_API_KEY: z.string().min(1),
     CHATTERBOX_API_URL: z.url(),
+    // optional until omnivoice_tts.py is deployed; OmniVoice generations fail with a clear error without it
+    OMNIVOICE_API_URL: z.url().optional(),
     DATABASE_URL: z.string().min(1),
     APP_URL: z.string().min(1),
     R2_ACCOUNT_ID: z.string().min(1),
@@ -15,6 +17,7 @@ export const env = createEnv({
   runtimeEnv: {
     CHATTERBOX_API_KEY: process.env.CHATTERBOX_API_KEY,
     CHATTERBOX_API_URL: process.env.CHATTERBOX_API_URL,
+    OMNIVOICE_API_URL: process.env.OMNIVOICE_API_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     APP_URL: process.env.APP_URL,
     R2_ACCOUNT_ID: process.env.R2_ACCOUNT_ID,

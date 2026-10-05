@@ -1,8 +1,8 @@
 /**
- * Fetches the OpenAPI spec from the Chatterbox TTS API and generates TypeScript types.
+ * Fetches the OpenAPI spec from each TTS engine API and generates TypeScript types.
  *
  * Usage:
- *   CHATTERBOX_API_URL=https://your-api-url npm run sync-api
+ *   CHATTERBOX_API_URL=https://... OMNIVOICE_API_URL=https://... npm run sync-api
  *
  * Or with .env file:
  *   npm run sync-api
@@ -16,14 +16,19 @@ import 'dotenv/config';
 import openapiTS, { astToString } from 'openapi-typescript';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OUTPUT_PATH = path.resolve(__dirname, '../src/types/chatterbox-api.d.ts');
+const TYPES_DIR = path.resolve(__dirname, '../src/types');
 
-async function main() {
-  const apiUrl = process.env.CHATTERBOX_API_URL;
+// engine name -> env var holding its API URL; types land in src/types/<name>-api.d.ts
+const ENGINES = [
+  ['chatterbox', 'CHATTERBOX_API_URL'],
+  ['omnivoice', 'OMNIVOICE_API_URL'],
+] as const;
+
+async function syncEngine(name: string, envVar: string) {
+  const apiUrl = process.env[envVar];
 
   if (!apiUrl) {
-    console.error('Error: CHATTERBOX_API_URL environment variable is required');
-    process.exit(1);
+    throw new Error(`${envVar} environment variable is required`);
   }
 
   const openApiUrl = `${apiUrl}/openapi.json`;
@@ -31,12 +36,6 @@ async function main() {
 
   const ast = await openapiTS(new URL(openApiUrl));
   const contents = astToString(ast);
-
-  // Ensure output directory exists
-  const outputDir = path.dirname(OUTPUT_PATH);
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
 
   // Add header comment
   const header = `/**
@@ -48,8 +47,17 @@ async function main() {
   */
   `;
 
-  fs.writeFileSync(OUTPUT_PATH, header + contents);
-  console.log(`Types written to: ${OUTPUT_PATH}`);
+  const outputPath = path.join(TYPES_DIR, `${name}-api.d.ts`);
+  fs.writeFileSync(outputPath, header + contents);
+  console.log(`Types written to: ${outputPath}`);
+}
+
+async function main() {
+  fs.mkdirSync(TYPES_DIR, { recursive: true });
+
+  for (const [name, envVar] of ENGINES) {
+    await syncEngine(name, envVar);
+  }
 }
 
 main().catch((err: unknown) => {
